@@ -1,0 +1,18 @@
+{
+  "home": {
+    "title": "歡迎",
+    "description": "這是一個展示我的作品與介紹的地方。"
+  },
+  "about": {
+    "title": "關於我",
+    "content": "我是一位全端工程師，熱愛技術與創作。"
+  },
+  "navbar": {
+    "home": "首頁",
+    "about": "關於",
+    "contact": "聯絡我"
+  },
+  "footer": {
+    "copyright": "© 2025 RichardBoyz"
+  }
+}

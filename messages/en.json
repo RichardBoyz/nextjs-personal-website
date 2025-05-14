@@ -1,0 +1,18 @@
+{
+  "home": {
+    "title": "Welcome",
+    "description": "This is a place to showcase my projects and introductions."
+  },
+  "about": {
+    "title": "About Me",
+    "content": "I'm a full-stack engineer passionate about tech and creativity."
+  },
+  "navbar": {
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "footer": {
+    "copyright": "© 2025 RichardBoyz"
+  }
+}
