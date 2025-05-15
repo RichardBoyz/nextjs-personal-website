@@ -14,5 +14,10 @@
   },
   "footer": {
     "copyright": "© 2025 RichardBoyz"
+  },
+  "theme": {
+    "switcher": {
+      "aria": "切換深淺色主題"
+    }
   }
 }

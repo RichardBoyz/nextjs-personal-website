@@ -3,6 +3,7 @@ import { Locale, useTranslations } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { use } from "react";
 import { GoogleAnalytics } from "nextjs-google-analytics";
+import { ThemeChanger } from "@/components/ui";
 
 type Props = {
   params: Promise<{ locale: Locale }>;
@@ -14,6 +15,7 @@ export default function IndexPage({ params }: Props) {
   return (
     <>
       <GoogleAnalytics />
+      <ThemeChanger />
       <p className="max-w-[590px]">{t("title")}</p>
     </>
   );

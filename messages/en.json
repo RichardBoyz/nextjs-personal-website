@@ -14,5 +14,10 @@
   },
   "footer": {
     "copyright": "© 2025 RichardBoyz"
+  },
+  "theme": {
+    "switcher": {
+      "aria": "Switch between light and dark themes"
+    }
   }
 }
