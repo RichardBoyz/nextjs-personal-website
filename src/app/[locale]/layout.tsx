@@ -7,6 +7,7 @@ import { Inter } from "next/font/google";
 import { routing } from "@/i18n/routing";
 import { ThemeProvider } from "next-themes";
 import "../globals.css";
+import Navbar from "@/components/ui/Navbar";
 
 type Props = {
   children: ReactNode;
@@ -41,7 +42,8 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   return (
     <html className="h-full" lang={locale} suppressHydrationWarning>
-      <body className={clsx(inter.className, "flex h-full flex-col")}>
+      <body className={clsx(inter.className, "")}>
+        <Navbar />
         <ThemeProvider attribute="class">
           <NextIntlClientProvider>{children}</NextIntlClientProvider>
         </ThemeProvider>
