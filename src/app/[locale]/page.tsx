@@ -2,6 +2,7 @@
 import { Locale, useTranslations } from "next-intl";
 import { GoogleAnalytics } from "nextjs-google-analytics";
 import { ThemeChanger } from "@/components/ui";
+import ThreeCanvas from "@/components/three/ThreeCanvas";
 
 type Props = {
   params: Promise<{ locale: Locale }>;
@@ -14,7 +15,7 @@ export default function IndexPage({ params }: Props) {
     <>
       <GoogleAnalytics />
       <ThemeChanger />
-      <p className="max-w-[590px]">{t("title")}</p>
+      <ThreeCanvas />
     </>
   );
 }
