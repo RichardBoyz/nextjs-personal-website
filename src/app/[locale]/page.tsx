@@ -1,7 +1,5 @@
 "use client";
 import { Locale, useTranslations } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
-import { use } from "react";
 import { GoogleAnalytics } from "nextjs-google-analytics";
 import { ThemeChanger } from "@/components/ui";
 

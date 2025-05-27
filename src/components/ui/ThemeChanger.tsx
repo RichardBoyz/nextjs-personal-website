@@ -18,7 +18,7 @@ export function ThemeChanger() {
     <button
       aria-label="Toggle Dark Mode"
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="p-2"
+      className="p-2 cursor-pointer transition-colors duration-200 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-md"
     >
       {isDark ? (
         <SunIcon className="h-6 w-6 text-yellow-500" />
