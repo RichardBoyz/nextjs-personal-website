@@ -1,19 +1,20 @@
 "use client";
 
+import { HighlightProvider } from "@/contexts/HighlightContext";
+import useMobile from "@/hooks/useMobile";
+import PersonalScene from "@/scenes/PersonalScene";
+import { useStartStore } from "@/stores/useStartStore";
+import { Physics } from "@react-three/cannon";
+import { PointerLockControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Suspense, useEffect, useRef } from "react";
-import { OrbitControls, PointerLockControls } from "@react-three/drei";
-import PersonalScene from "@/scenes/PersonalScene";
-import Player from "./Player";
-import MobileControlLogic from "./MobileControlLogic";
-import StartOverlay from "../ui/StartOverlay";
 import { PointerLockControls as PointerLockControlsImpl } from "three-stdlib";
-import MobileControlUI from "./MobileControlUI";
-import { useStartStore } from "@/stores/useStartStore";
-import useMobile from "@/hooks/useMobile";
-import MobileLookControl from "./MobileLookControl";
+import StartOverlay from "../ui/StartOverlay";
 import CenterHighlight from "./CenterHighlight";
-import { HighlightProvider } from "@/contexts/HighlightContext";
+import MobileControlLogic from "./MobileControlLogic";
+import MobileControlUI from "./MobileControlUI";
+import MobileLookControl from "./MobileLookControl";
+import Player from "./Player";
 
 export default function ThreeCanvas() {
   const controlsRef = useRef<PointerLockControlsImpl | null>(null);
@@ -59,22 +60,19 @@ export default function ThreeCanvas() {
         <ambientLight intensity={0.5} />
         <directionalLight position={[5, 10, 7.5]} intensity={1} castShadow />
 
-        {/* 使用 Suspense 包裝非同步載入內容（如模型） */}
         <Suspense fallback={null}>
-          <PersonalScene />
+          <Physics>
+            <PersonalScene />
+            <Player />
+          </Physics>
         </Suspense>
 
-        {/* 開發階段可以先用 OrbitControls，之後用 PointerLockControls 取代 */}
-        {/* <OrbitControls /> */}
         {started && !isMobile && <PointerLockControls ref={controlsRef} />}
 
         {/* 手機控制邏輯 */}
         {isMobile && <MobileControlLogic moveDirRef={moveDirRef} />}
 
         {isMobile && started && <MobileLookControl />}
-
-        {/* 使用者 */}
-        <Player />
 
         {/* 顯示 HighLight */}
         <CenterHighlight />

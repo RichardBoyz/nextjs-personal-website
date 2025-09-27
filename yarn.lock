@@ -323,6 +323,20 @@
   resolved "https://registry.yarnpkg.com/@next/swc-win32-x64-msvc/-/swc-win32-x64-msvc-15.3.2.tgz#43cc36097ac27639e9024a5ceaa6e7727fa968c8"
   integrity sha512-aW5B8wOPioJ4mBdMDXkt5f3j8pUr9W8AnlX0Df35uRWNT1Y6RIybxjnSUe+PhM+M1bwgyY8PHLmXZC6zT1o5tA==
 
+"@pmndrs/cannon-worker-api@^2.4.0":
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/@pmndrs/cannon-worker-api/-/cannon-worker-api-2.4.0.tgz#b71522fb246ea305fcc32e158ef29d7740df8381"
+  integrity sha512-oJA1Bboc+WObksRaGDKJG0Wna9Q75xi1MdXVAZ9qXzBOyPsadmAnrmiKOEF0R8v/4zsuJElvscNZmyo3msbZjA==
+
+"@react-three/cannon@^6.6.0":
+  version "6.6.0"
+  resolved "https://registry.yarnpkg.com/@react-three/cannon/-/cannon-6.6.0.tgz#bef2b2224f6ea0c59e704045dc289760522dae29"
+  integrity sha512-lP9rJoVHQi0w+dYF8FJAm2xr5eLfNEckb04j72kjqndUkuOPr26N4rSBhQbHl5b5N3tEnhQaIMungAvHkcY8/A==
+  dependencies:
+    "@pmndrs/cannon-worker-api" "^2.4.0"
+    cannon-es "^0.20.0"
+    cannon-es-debugger "^1.0.0"
+
 "@react-three/drei@^10.0.8":
   version "10.0.8"
   resolved "https://registry.yarnpkg.com/@react-three/drei/-/drei-10.0.8.tgz#c1fdbd32e22e878e5f49566d86ecd949e268e65b"
@@ -619,6 +633,16 @@ caniuse-lite@^1.0.30001579:
   version "1.0.30001718"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001718.tgz#dae13a9c80d517c30c6197515a96131c194d8f82"
   integrity sha512-AflseV1ahcSunK53NfEs9gFWgOEmzr0f+kaMFA4xiLZlr9Hzt7HxcSpIFcnNCUkz6R6dWKa54rUz3HUmI3nVcw==
+
+cannon-es-debugger@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/cannon-es-debugger/-/cannon-es-debugger-1.0.0.tgz#28c6679b30dcf608e978225239f447a8fe55ccb4"
+  integrity sha512-sE9lDOBAYFKlh+0w+cvWKwUhJef8HYnUSVPWPL0jD15MAuVRQKno4QYZSGxgOoJkMR3mQqxL4bxys2b3RSWH8g==
+
+cannon-es@^0.20.0:
+  version "0.20.0"
+  resolved "https://registry.yarnpkg.com/cannon-es/-/cannon-es-0.20.0.tgz#bf2f62a674701f37e3d861c90668a32d4d32f082"
+  integrity sha512-eZhWTZIkFOnMAJOgfXJa9+b3kVlvG+FX4mdkpePev/w/rP5V8NRquGyEozcjPfEoXUlb+p7d9SUcmDSn14prOA==
 
 chownr@^3.0.0:
   version "3.0.0"

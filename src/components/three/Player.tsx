@@ -1,44 +1,37 @@
 "use client";
 
-import { useRef, useEffect } from "react";
-import { useFrame, useThree } from "@react-three/fiber";
-import * as THREE from "three";
 import { useStartStore } from "@/stores/useStartStore";
+import { useFrame, useThree } from "@react-three/fiber";
+import { useEffect, useRef } from "react";
+import * as THREE from "three";
 
-const SPEED = 0.1;
-const BOB_FREQ = 10;
-const BOB_AMP = 0.03;
+const SPEED = 5; // 注意：這裡是物理速度，不再是 0.1
+const BOB_FREQ = 8;
+const BOB_AMP = 0.02;
 const BASE_HEIGHT = 1.6;
-const GRAVITY = 0.01;
-const JUMP_VELOCITY = 0.2;
+const JUMP_VELOCITY = 5;
+const SAFE_DISTANCE = 0.5;
 
 export default function Player() {
-  const { camera } = useThree();
-  const velocity = useRef(new THREE.Vector3());
-  const direction = useRef(new THREE.Vector3());
-  const keysPressed = useRef<{ [key: string]: boolean }>({});
+  const { camera, scene } = useThree();
   const started = useStartStore((state) => state.started);
-  const bobTime = useRef(0);
-  const isJumping = useRef(false);
-  const verticalVelocity = useRef(0);
 
+  const keysPressed = useRef<{ [key: string]: boolean }>({});
+  const bobTime = useRef(0);
+  const onGround = useRef(true); // 簡單判斷用
+  const velocityY = useRef(0);
+  const raycaster = useRef(new THREE.Raycaster());
+
+  // 鍵盤事件
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === " ") {
-        if (!isJumping.current) {
-          isJumping.current = true;
-          verticalVelocity.current = JUMP_VELOCITY;
-        }
-      }
       keysPressed.current[e.key.toLowerCase()] = true;
     };
     const handleKeyUp = (e: KeyboardEvent) => {
       keysPressed.current[e.key.toLowerCase()] = false;
     };
-
     window.addEventListener("keydown", handleKeyDown);
     window.addEventListener("keyup", handleKeyUp);
-
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("keyup", handleKeyUp);
@@ -48,21 +41,20 @@ export default function Player() {
   useFrame((_, delta) => {
     if (!started) return;
 
-    direction.current.set(0, 0, 0);
-    if (keysPressed.current["w"]) direction.current.z += 1;
-    if (keysPressed.current["s"]) direction.current.z -= 1;
-    if (keysPressed.current["a"]) direction.current.x -= 1;
-    if (keysPressed.current["d"]) direction.current.x += 1;
+    const direction = new THREE.Vector3();
+    if (keysPressed.current["w"]) direction.z += 1;
+    if (keysPressed.current["s"]) direction.z -= 1;
+    if (keysPressed.current["a"]) direction.x -= 1;
+    if (keysPressed.current["d"]) direction.x += 1;
 
-    const isMoving = direction.current.lengthSq() > 0;
-
+    const isMoving = direction.lengthSq() > 0;
     if (isMoving) {
       bobTime.current += delta;
     } else {
       bobTime.current = 0;
     }
 
-    // 改為根據相機方向向量的水平投影計算方向
+    // 根據相機朝向來決定移動方向
     const camDir = new THREE.Vector3();
     camera.getWorldDirection(camDir);
     camDir.y = 0;
@@ -71,33 +63,43 @@ export default function Player() {
     const camRight = new THREE.Vector3()
       .crossVectors(camDir, camera.up)
       .normalize();
+    const moveVec = new THREE.Vector3()
+      .addScaledVector(camDir, direction.z)
+      .addScaledVector(camRight, direction.x);
 
-    const moveVec = new THREE.Vector3();
-    moveVec
-      .addScaledVector(camDir, direction.current.z)
-      .addScaledVector(camRight, direction.current.x)
-      .normalize();
-
-    velocity.current.copy(moveVec).multiplyScalar(SPEED);
-    camera.position.add(velocity.current);
-
-    // 垂直方向處理
-    if (isJumping.current) {
-      verticalVelocity.current -= GRAVITY;
-      camera.position.y += verticalVelocity.current;
-
-      if (camera.position.y <= BASE_HEIGHT) {
-        camera.position.y = BASE_HEIGHT;
-        isJumping.current = false;
-        verticalVelocity.current = 0;
+    if (moveVec.lengthSq() > 0) {
+      moveVec.normalize();
+      raycaster.current.set(camera.position, moveVec);
+      const intersects = raycaster.current.intersectObjects(
+        scene.children,
+        true
+      );
+      if (intersects.length === 0 || intersects[0].distance > SAFE_DISTANCE) {
+        camera.position.add(moveVec.multiplyScalar(SPEED * delta));
       }
-    } else {
-      // head bobbing 只有在沒跳躍時使用
-      camera.position.y =
-        BASE_HEIGHT +
-        (isMoving ? Math.sin(bobTime.current * BOB_FREQ) * BOB_AMP : 0);
+    }
+
+    // 跳躍模擬
+    if (keysPressed.current[" "] && onGround.current) {
+      velocityY.current = JUMP_VELOCITY;
+      onGround.current = false;
+    }
+
+    // 重力與位置更新
+    velocityY.current -= 9.8 * delta;
+    camera.position.y += velocityY.current * delta;
+
+    if (camera.position.y <= BASE_HEIGHT) {
+      camera.position.y = BASE_HEIGHT;
+      onGround.current = true;
+      velocityY.current = 0;
+    }
+
+    // head bobbing (只有走路時)
+    if (onGround.current && isMoving) {
+      camera.position.y += Math.sin(bobTime.current * BOB_FREQ) * BOB_AMP;
     }
   });
 
-  return null; // 不需要渲染任何物件，只操作相機位置
+  return null;
 }

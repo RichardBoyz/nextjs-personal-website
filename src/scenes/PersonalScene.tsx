@@ -1,13 +1,34 @@
 "use client";
 
-import Highlightable from "@/components/three/Highlightable";
+import { usePlane, useTrimesh } from "@react-three/cannon";
+import { useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 
+function RoomCollider({ geometry }: { geometry: THREE.BufferGeometry }) {
+  const vertices = geometry.attributes.position.array as Float32Array;
+  const indices = geometry.index?.array as Uint16Array;
+
+  useTrimesh(() => ({
+    args: [vertices, indices],
+    type: "Static",
+  }));
+
+  return null;
+}
+
 export default function PersonalScene() {
   const cubeRef = useRef<THREE.Mesh>(null);
   const borderRef = useRef<THREE.LineSegments>(null);
+  const { scene } = useGLTF("/models/scene.gltf");
+
+  // 地板剛體
+  usePlane(() => ({
+    rotation: [-Math.PI / 2, 0, 0],
+    position: [0, 0, 0],
+    type: "Static",
+  }));
 
   useFrame(() => {
     if (cubeRef.current) {
@@ -23,27 +44,34 @@ export default function PersonalScene() {
 
   return (
     <>
-      {/* 地板 */}
+      {/* 地板外觀 */}
       <mesh name="floor" rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
         <planeGeometry args={[100, 100]} />
         <meshStandardMaterial color="#cccccc" />
       </mesh>
 
-      {/* 可展示技能或作品的旋轉立方體 */}
-      <Highlightable>
+      {/* <Highlightable>
         <mesh name="cube" position={[0, 1, 0]} ref={cubeRef} castShadow>
-          {/* 外框（高亮用） */}
-          {/* <lineSegments ref={borderRef}>
-          <edgesGeometry
-            attach="geometry"
-            args={[new THREE.BoxGeometry(1.05, 1.05, 1.05)]}
-          />
-          <lineBasicMaterial attach="material" color="yellow" />
-        </lineSegments> */}
           <boxGeometry args={[1, 1, 1]} />
           <meshStandardMaterial color="#4f46e5" />
         </mesh>
-      </Highlightable>
+      </Highlightable> */}
+
+      {/* 房間模型 */}
+      <primitive object={scene} position={[2, 0, 2]} />
+
+      {/* 房間碰撞器 */}
+      {scene.children.map((child, i) => {
+        if ((child as THREE.Mesh).isMesh) {
+          return (
+            <RoomCollider
+              key={i}
+              geometry={(child as THREE.Mesh).geometry as THREE.BufferGeometry}
+            />
+          );
+        }
+        return null;
+      })}
     </>
   );
 }
