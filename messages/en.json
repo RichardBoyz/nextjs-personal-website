@@ -19,5 +19,8 @@
     "switcher": {
       "aria": "Switch between light and dark themes"
     }
+  },
+  "common": {
+    "clickme": "Click me"
   }
 }

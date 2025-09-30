@@ -30,7 +30,7 @@ export default function MobileControlUI({
           style={{ gridArea: "up" }}
           onTouchStart={() => (moveDirRef.current!.z = -1)}
           onTouchEnd={() => (moveDirRef.current!.z = 0)}
-          className="bg-blue-500 rounded-full"
+          className="select-none"
         >
           ↑
         </button>
@@ -38,6 +38,7 @@ export default function MobileControlUI({
           style={{ gridArea: "down" }}
           onTouchStart={() => (moveDirRef.current!.z = 1)}
           onTouchEnd={() => (moveDirRef.current!.z = 0)}
+          className="select-none"
         >
           ↓
         </button>
@@ -45,6 +46,7 @@ export default function MobileControlUI({
           style={{ gridArea: "left" }}
           onTouchStart={() => (moveDirRef.current!.x = -1)}
           onTouchEnd={() => (moveDirRef.current!.x = 0)}
+          className="select-none"
         >
           ←
         </button>
@@ -52,6 +54,7 @@ export default function MobileControlUI({
           style={{ gridArea: "right" }}
           onTouchStart={() => (moveDirRef.current!.x = 1)}
           onTouchEnd={() => (moveDirRef.current!.x = 0)}
+          className="select-none"
         >
           →
         </button>

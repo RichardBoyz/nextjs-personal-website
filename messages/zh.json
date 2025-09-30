@@ -19,5 +19,8 @@
     "switcher": {
       "aria": "切換深淺色主題"
     }
+  },
+  "common": {
+    "clickme": "點我"
   }
 }

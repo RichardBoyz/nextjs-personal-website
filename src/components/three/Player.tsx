@@ -2,7 +2,7 @@
 
 import { useStartStore } from "@/stores/useStartStore";
 import { useFrame, useThree } from "@react-three/fiber";
-import { useEffect, useRef } from "react";
+import { RefObject, useEffect, useRef } from "react";
 import * as THREE from "three";
 
 const SPEED = 5; // 注意：這裡是物理速度，不再是 0.1
@@ -12,7 +12,12 @@ const BASE_HEIGHT = 1.6;
 const JUMP_VELOCITY = 5;
 const SAFE_DISTANCE = 0.5;
 
-export default function Player() {
+interface PlayerProps {
+  moveDirRef?: RefObject<{ x: number; z: number }>;
+  isMobile?: boolean;
+}
+
+export default function Player({ moveDirRef, isMobile }: PlayerProps) {
   const { camera, scene } = useThree();
   const started = useStartStore((state) => state.started);
 
@@ -24,6 +29,8 @@ export default function Player() {
 
   // 鍵盤事件
   useEffect(() => {
+    if (isMobile) return;
+
     const handleKeyDown = (e: KeyboardEvent) => {
       keysPressed.current[e.key.toLowerCase()] = true;
     };
@@ -36,16 +43,22 @@ export default function Player() {
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("keyup", handleKeyUp);
     };
-  }, []);
+  }, [isMobile]);
 
   useFrame((_, delta) => {
     if (!started) return;
 
     const direction = new THREE.Vector3();
-    if (keysPressed.current["w"]) direction.z += 1;
-    if (keysPressed.current["s"]) direction.z -= 1;
-    if (keysPressed.current["a"]) direction.x -= 1;
-    if (keysPressed.current["d"]) direction.x += 1;
+
+    if (isMobile && moveDirRef && moveDirRef.current) {
+      direction.x = moveDirRef.current.x;
+      direction.z = moveDirRef.current.z;
+    } else {
+      if (keysPressed.current["w"]) direction.z += 1;
+      if (keysPressed.current["s"]) direction.z -= 1;
+      if (keysPressed.current["a"]) direction.x -= 1;
+      if (keysPressed.current["d"]) direction.x += 1;
+    }
 
     const isMoving = direction.lengthSq() > 0;
     if (isMoving) {
@@ -79,8 +92,8 @@ export default function Player() {
       }
     }
 
-    // 跳躍模擬
-    if (keysPressed.current[" "] && onGround.current) {
+    // 跳躍模擬 (僅桌面版且空白鍵)
+    if (!isMobile && keysPressed.current[" "] && onGround.current) {
       velocityY.current = JUMP_VELOCITY;
       onGround.current = false;
     }

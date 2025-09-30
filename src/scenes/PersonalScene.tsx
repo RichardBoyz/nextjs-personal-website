@@ -3,7 +3,7 @@
 import { usePlane, useTrimesh } from "@react-three/cannon";
 import { useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 
 function RoomCollider({ geometry }: { geometry: THREE.BufferGeometry }) {
@@ -22,6 +22,10 @@ export default function PersonalScene() {
   const cubeRef = useRef<THREE.Mesh>(null);
   const borderRef = useRef<THREE.LineSegments>(null);
   const { scene } = useGLTF("/models/scene.gltf");
+
+  const [meshGeometries, setMeshGeometries] = useState<THREE.BufferGeometry[]>(
+    []
+  );
 
   // 地板剛體
   usePlane(() => ({
@@ -42,6 +46,22 @@ export default function PersonalScene() {
     }
   }, []);
 
+  useEffect(() => {
+    if (scene) {
+      const geometries: THREE.BufferGeometry[] = [];
+      scene.traverse((child) => {
+        if ((child as THREE.Mesh).isMesh) {
+          (child as THREE.Mesh).userData.isWall = true;
+          console.log("Loaded mesh:", child.name);
+          geometries.push(
+            (child as THREE.Mesh).geometry as THREE.BufferGeometry
+          );
+        }
+      });
+      setMeshGeometries(geometries);
+    }
+  }, [scene]);
+
   return (
     <>
       {/* 地板外觀 */}
@@ -61,17 +81,9 @@ export default function PersonalScene() {
       <primitive object={scene} position={[2, 0, 2]} />
 
       {/* 房間碰撞器 */}
-      {scene.children.map((child, i) => {
-        if ((child as THREE.Mesh).isMesh) {
-          return (
-            <RoomCollider
-              key={i}
-              geometry={(child as THREE.Mesh).geometry as THREE.BufferGeometry}
-            />
-          );
-        }
-        return null;
-      })}
+      {meshGeometries.map((geometry, i) => (
+        <RoomCollider key={i} geometry={geometry} />
+      ))}
     </>
   );
 }

@@ -15,7 +15,10 @@ export default function MobileControlLogic({
   const { camera } = useThree();
   const direction = useRef(new THREE.Vector3());
 
-  useFrame(() => {
+  const SAFE_DISTANCE = 0.5;
+  const raycaster = useRef(new THREE.Raycaster());
+
+  useFrame(({ scene }) => {
     direction.current.set(
       moveDirRef.current?.x || 0,
       0,
@@ -23,8 +26,21 @@ export default function MobileControlLogic({
     );
     direction.current.normalize();
     direction.current.applyEuler(camera.rotation);
-    direction.current.multiplyScalar(SPEED);
-    camera.position.add(direction.current);
+
+    if (direction.current.lengthSq() > 0) {
+      raycaster.current.set(camera.position, direction.current);
+      const intersects = raycaster.current
+        .intersectObjects(scene.children, true)
+        .filter((i) => i.object !== camera);
+
+      console.log(
+        intersects.map((i) => ({ name: i.object.name, distance: i.distance }))
+      );
+
+      if (intersects.length === 0 || intersects[0].distance > SAFE_DISTANCE) {
+        camera.position.add(direction.current.multiplyScalar(SPEED));
+      }
+    }
   });
 
   return null;

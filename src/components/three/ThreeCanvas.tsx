@@ -9,8 +9,9 @@ import { PointerLockControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Suspense, useEffect, useRef } from "react";
 import { PointerLockControls as PointerLockControlsImpl } from "three-stdlib";
+import { InteractionUI } from "../ui/InteractionUI";
 import StartOverlay from "../ui/StartOverlay";
-import CenterHighlight from "./CenterHighlight";
+import { InteractionHandler } from "./InteractionHandler";
 import MobileControlLogic from "./MobileControlLogic";
 import MobileControlUI from "./MobileControlUI";
 import MobileLookControl from "./MobileLookControl";
@@ -53,30 +54,26 @@ export default function ThreeCanvas() {
       {/* 手機控制 */}
       {isMobile && <MobileControlUI moveDirRef={moveDirRef} />}
       <Canvas
+        id="canvas-area"
         camera={{ position: [0, 1.6, 5], fov: 75 }}
         shadows
         style={{ width: "100vw", height: "100vh" }}
       >
         <ambientLight intensity={0.5} />
         <directionalLight position={[5, 10, 7.5]} intensity={1} castShadow />
-
         <Suspense fallback={null}>
           <Physics>
             <PersonalScene />
-            <Player />
+            <Player moveDirRef={moveDirRef} isMobile={isMobile} />
           </Physics>
         </Suspense>
-
         {started && !isMobile && <PointerLockControls ref={controlsRef} />}
-
-        {/* 手機控制邏輯 */}
+        手機控制邏輯
         {isMobile && <MobileControlLogic moveDirRef={moveDirRef} />}
-
         {isMobile && started && <MobileLookControl />}
-
-        {/* 顯示 HighLight */}
-        <CenterHighlight />
+        <InteractionHandler />
       </Canvas>
+      <InteractionUI />
     </HighlightProvider>
   );
 }

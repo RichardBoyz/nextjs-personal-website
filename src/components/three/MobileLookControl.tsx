@@ -1,6 +1,6 @@
 "use client";
+import { useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
-import { useThree } from "@react-three/fiber";
 
 export default function MobileLookControl() {
   const { camera } = useThree();
@@ -10,6 +10,9 @@ export default function MobileLookControl() {
   camera.rotation.order = "YXZ";
 
   useEffect(() => {
+    const element = document.getElementById("canvas-area");
+    if (!element) return;
+
     const handleTouchStart = (e: TouchEvent) => {
       e.preventDefault();
       const touch = e.touches[0];
@@ -34,13 +37,10 @@ export default function MobileLookControl() {
       look.current.x -= deltaY * sensitivity;
       look.current.y -= deltaX * sensitivity;
 
-      // 限制上下轉動角度（pitch）
       look.current.x = Math.max(
         -Math.PI / 2,
         Math.min(Math.PI / 2, look.current.x)
       );
-
-      camera.rotation.set(look.current.x, look.current.y, 0);
     };
 
     const handleTouchEnd = () => {
@@ -48,18 +48,23 @@ export default function MobileLookControl() {
       lastTouch.current = null;
     };
 
-    document.addEventListener("touchstart", handleTouchStart, {
+    // ✅ 綁定在 canvas-area
+    element.addEventListener("touchstart", handleTouchStart, {
       passive: false,
     });
-    document.addEventListener("touchmove", handleTouchMove, { passive: false });
-    document.addEventListener("touchend", handleTouchEnd);
+    element.addEventListener("touchmove", handleTouchMove, { passive: false });
+    element.addEventListener("touchend", handleTouchEnd);
 
     return () => {
-      document.removeEventListener("touchstart", handleTouchStart);
-      document.removeEventListener("touchmove", handleTouchMove);
-      document.removeEventListener("touchend", handleTouchEnd);
+      element.removeEventListener("touchstart", handleTouchStart);
+      element.removeEventListener("touchmove", handleTouchMove);
+      element.removeEventListener("touchend", handleTouchEnd);
     };
   }, [camera]);
+
+  useFrame(() => {
+    camera.rotation.set(look.current.x, look.current.y, 0);
+  });
 
   return null;
 }
