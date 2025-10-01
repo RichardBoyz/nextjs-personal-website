@@ -68,7 +68,7 @@ export default function ThreeCanvas() {
           </Physics>
         </Suspense>
         {started && !isMobile && <PointerLockControls ref={controlsRef} />}
-        手機控制邏輯
+        {/* 手機控制邏輯 */}
         {isMobile && <MobileControlLogic moveDirRef={moveDirRef} />}
         {isMobile && started && <MobileLookControl />}
         <InteractionHandler />

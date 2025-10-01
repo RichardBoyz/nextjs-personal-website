@@ -21,6 +21,8 @@
     }
   },
   "common": {
-    "clickme": "Click me"
+    "clickme": "Click me",
+    "clickToStart": "Click to start",
+    "startExplore": "Start"
   }
 }

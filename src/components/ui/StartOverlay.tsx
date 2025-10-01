@@ -2,12 +2,14 @@
 "use client";
 
 import { useStartStore } from "@/stores/useStartStore";
+import { useTranslations } from "next-intl";
 
 export default function StartOverlay({ onStart }: { onStart: () => void }) {
   const handleStart = () => {
     useStartStore.getState().start();
     onStart();
   };
+  const t = useTranslations();
 
   return (
     <div
@@ -28,7 +30,7 @@ export default function StartOverlay({ onStart }: { onStart: () => void }) {
         flexDirection: "column",
       }}
     >
-      <p style={{ pointerEvents: "none" }}>點擊開始進入互動體驗</p>
+      <p style={{ pointerEvents: "none" }}>{t("common.clickToStart")}</p>
       <button
         style={{
           marginTop: 16,
@@ -42,7 +44,7 @@ export default function StartOverlay({ onStart }: { onStart: () => void }) {
         }}
         onClick={handleStart}
       >
-        開始探索
+        {t("common.startExplore")}
       </button>
     </div>
   );

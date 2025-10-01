@@ -21,6 +21,8 @@
     }
   },
   "common": {
-    "clickme": "點我"
+    "clickme": "點我",
+    "clickToStart": "點擊開始互動",
+    "startExplore": "開始探索"
   }
 }
