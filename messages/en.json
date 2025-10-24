@@ -4,8 +4,22 @@
     "description": "This is a place to showcase my projects and introductions."
   },
   "about": {
-    "title": "About Me",
-    "content": "I'm a full-stack engineer passionate about tech and creativity."
+    "title": "Full Stack Engineer • Espresso Enthusiast",
+    "content": "Full-stack engineer with 5 years of experience building modern web applications",
+    "card": {
+      "title": "About Me",
+      "description": {
+        "part1": "I’m a full-stack engineer with five years of experience and have completed several projects so far. Although I specialize in full-stack development, I have a strong preference for front-end visual and interactive design. In the future, I hope to broaden my technical expertise to areas such as DevOps.",
+        "part2": "Outside of work, I enjoy traveling and photography, as well as playing video games. One day, I hope to create a game of my own."
+      },
+      "actions": {
+        "experience": "My Experience",
+        "contact": "Get in Touch"
+      }
+    }
+  },
+  "experience": {
+    "title": "Experience"
   },
   "navbar": {
     "home": "Home",
@@ -23,6 +37,8 @@
   "common": {
     "clickme": "Click me",
     "clickToStart": "Click to start",
-    "startExplore": "Start"
+    "startExplore": "Start",
+    "directToMyPage": "Go straight to my profile",
+    "downloadResume": "Download Resume"
   }
 }

@@ -1,11 +1,11 @@
-import { notFound } from "next/navigation";
-import { Locale, hasLocale, NextIntlClientProvider } from "next-intl";
-import { getTranslations, setRequestLocale } from "next-intl/server";
-import { ReactNode } from "react";
-import { clsx } from "clsx";
-import { Inter } from "next/font/google";
 import { routing } from "@/i18n/routing";
+import { clsx } from "clsx";
+import { hasLocale, Locale, NextIntlClientProvider } from "next-intl";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ThemeProvider } from "next-themes";
+import { Inter } from "next/font/google";
+import { notFound } from "next/navigation";
+import { ReactNode } from "react";
 import "../globals.css";
 
 type Props = {

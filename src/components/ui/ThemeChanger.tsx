@@ -1,10 +1,17 @@
 "use client";
 
+import { MoonIcon, SunIcon } from "@heroicons/react/24/outline";
+import clsx from "clsx";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import { MoonIcon, SunIcon } from "@heroicons/react/24/outline";
 
-export function ThemeChanger() {
+export function ThemeChanger({
+  className,
+  moonIconClassName,
+}: {
+  className?: string;
+  moonIconClassName?: string;
+}) {
   const { setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
@@ -18,12 +25,20 @@ export function ThemeChanger() {
     <button
       aria-label="Toggle Dark Mode"
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="p-2 cursor-pointer transition-colors duration-200 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-md relative z-10"
+      className={clsx(
+        "group absolute z-20 w-fit cursor-pointer p-2 outline-none transition-colors duration-200 hover:bg-gray-500 dark:hover:bg-gray-700",
+        className,
+      )}
     >
       {isDark ? (
-        <SunIcon className="h-6 w-6 text-yellow-500" />
+        <SunIcon className="icon-button-basic text-yellow-500" />
       ) : (
-        <MoonIcon className="h-6 w-6 text-gray-800" />
+        <MoonIcon
+          className={clsx(
+            "icon-button-basic text-black group-hover:text-white dark:text-white",
+            moonIconClassName,
+          )}
+        />
       )}
     </button>
   );

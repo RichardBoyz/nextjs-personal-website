@@ -24,7 +24,7 @@ export default function PersonalScene() {
   const { scene } = useGLTF("/models/scene.gltf");
 
   const [meshGeometries, setMeshGeometries] = useState<THREE.BufferGeometry[]>(
-    []
+    [],
   );
 
   // 地板剛體
@@ -52,9 +52,8 @@ export default function PersonalScene() {
       scene.traverse((child) => {
         if ((child as THREE.Mesh).isMesh) {
           (child as THREE.Mesh).userData.isWall = true;
-          console.log("Loaded mesh:", child.name);
           geometries.push(
-            (child as THREE.Mesh).geometry as THREE.BufferGeometry
+            (child as THREE.Mesh).geometry as THREE.BufferGeometry,
           );
         }
       });

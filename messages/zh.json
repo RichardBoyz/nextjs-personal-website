@@ -4,8 +4,22 @@
     "description": "這是一個展示我的作品與介紹的地方。"
   },
   "about": {
-    "title": "關於我",
-    "content": "我是一位全端工程師，熱愛技術與創作。"
+    "title": "全端軟體工程師 • 濃縮愛好者",
+    "content": "五年全端工作經驗，為了生活加減忍一下，2025年大起大落太刺激了，想尋求一個安穩的地方 🫠",
+    "card": {
+      "title": "關於我",
+      "description": {
+        "part1": "我是一位全端工程師，工作經驗五年，至今已完成數個專案。雖然專注於全端開發，但是偏好前端的視覺與互動設計，在未來也希望能將技術領域擴展到更廣的層面，例如DevOps",
+        "part2": "工作之餘，喜歡出門旅遊和攝影，也喜歡玩電玩遊戲，希望也能夠有一款屬於自己的遊戲製作~"
+      },
+      "actions": {
+        "experience": "我的經歷",
+        "contact": "和我聯繫"
+      }
+    }
+  },
+  "experience": {
+    "title": "過往經歷"
   },
   "navbar": {
     "home": "首頁",
@@ -23,6 +37,8 @@
   "common": {
     "clickme": "點我",
     "clickToStart": "點擊開始互動",
-    "startExplore": "開始探索"
+    "startExplore": "開始探索",
+    "directToMyPage": "直接到我的個人頁",
+    "downloadResume": "下載履歷"
   }
 }

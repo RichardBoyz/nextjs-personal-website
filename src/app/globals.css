@@ -1,14 +1,25 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --profile-background: linear-gradient(to bottom right, #c7e2ff, #e9ecee);
+  --text-foreground: #171717;
+  --overview-card-background: #fff;
+  --overview-card-text: #1d1d1f;
 }
 
 .dark {
   --background: #171717;
   --foreground: #ffffff;
+  --profile-background: linear-gradient(to bottom right, #243b55, #0f1728);
+  --text-foreground: #fff;
+  --overview-card-background: #708090;
+  --overview-card-text: #fff;
 }
 
 body {
@@ -19,6 +30,10 @@ body {
   overflow-y: auto;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body,
 main,
 header,
@@ -26,4 +41,20 @@ footer,
 .card,
 .sidebar {
   transition: background-color 0.3s ease;
+}
+
+.icon-container {
+  @apply flex h-10 w-10 cursor-pointer items-center justify-center rounded-full transition-colors duration-200;
+}
+
+.icon-hover {
+  @apply cursor-pointer transition duration-200 hover:scale-105;
+}
+
+.icon-button-basic {
+  @apply h-6 w-6 cursor-pointer;
+}
+
+:focus-visible {
+  outline: none;
 }

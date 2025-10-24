@@ -11,8 +11,11 @@ export default function MobileControlUI({
 }) {
   const started = useStartStore((state) => state.started);
   if (!started) return null; // 如果未開始操作，則不顯示控制UI
+
+  const buttonClass = "bg-black/50 text-white rounded-full select-none";
+
   return (
-    <div style={{ position: "fixed", left: 20, bottom: 20, zIndex: 1000 }}>
+    <div className="bottom-t fixed bottom-5 left-5 z-10">
       <div
         style={{
           display: "grid",
@@ -30,7 +33,7 @@ export default function MobileControlUI({
           style={{ gridArea: "up" }}
           onTouchStart={() => (moveDirRef.current!.z = -1)}
           onTouchEnd={() => (moveDirRef.current!.z = 0)}
-          className="select-none"
+          className={buttonClass}
         >
           ↑
         </button>
@@ -38,7 +41,7 @@ export default function MobileControlUI({
           style={{ gridArea: "down" }}
           onTouchStart={() => (moveDirRef.current!.z = 1)}
           onTouchEnd={() => (moveDirRef.current!.z = 0)}
-          className="select-none"
+          className={buttonClass}
         >
           ↓
         </button>
@@ -46,7 +49,7 @@ export default function MobileControlUI({
           style={{ gridArea: "left" }}
           onTouchStart={() => (moveDirRef.current!.x = -1)}
           onTouchEnd={() => (moveDirRef.current!.x = 0)}
-          className="select-none"
+          className={buttonClass}
         >
           ←
         </button>
@@ -54,7 +57,7 @@ export default function MobileControlUI({
           style={{ gridArea: "right" }}
           onTouchStart={() => (moveDirRef.current!.x = 1)}
           onTouchEnd={() => (moveDirRef.current!.x = 0)}
-          className="select-none"
+          className={buttonClass}
         >
           →
         </button>

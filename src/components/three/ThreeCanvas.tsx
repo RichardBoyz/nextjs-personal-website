@@ -1,7 +1,7 @@
 "use client";
 
+import { useDevice } from "@/contexts/DeviceContext";
 import { HighlightProvider } from "@/contexts/HighlightContext";
-import useMobile from "@/hooks/useMobile";
 import PersonalScene from "@/scenes/PersonalScene";
 import { useStartStore } from "@/stores/useStartStore";
 import { Physics } from "@react-three/cannon";
@@ -21,7 +21,7 @@ export default function ThreeCanvas() {
   const controlsRef = useRef<PointerLockControlsImpl | null>(null);
   const moveDirRef = useRef<{ x: number; z: number }>({ x: 0, z: 0 });
   const { started, start, end } = useStartStore();
-  const isMobile = useMobile();
+  const { isTouchDevice } = useDevice();
 
   // 監聽 pointer lock 事件
   useEffect(() => {
@@ -35,7 +35,7 @@ export default function ThreeCanvas() {
     return () => {
       document.removeEventListener(
         "pointerlockchange",
-        handlePointerLockChange
+        handlePointerLockChange,
       );
     };
   }, [end]);
@@ -52,7 +52,7 @@ export default function ThreeCanvas() {
         />
       )}
       {/* 手機控制 */}
-      {isMobile && <MobileControlUI moveDirRef={moveDirRef} />}
+      {isTouchDevice && <MobileControlUI moveDirRef={moveDirRef} />}
       <Canvas
         id="canvas-area"
         camera={{ position: [0, 1.6, 5], fov: 75 }}
@@ -64,13 +64,13 @@ export default function ThreeCanvas() {
         <Suspense fallback={null}>
           <Physics>
             <PersonalScene />
-            <Player moveDirRef={moveDirRef} isMobile={isMobile} />
+            <Player moveDirRef={moveDirRef} isMobile={isTouchDevice} />
           </Physics>
         </Suspense>
-        {started && !isMobile && <PointerLockControls ref={controlsRef} />}
+        {started && !isTouchDevice && <PointerLockControls ref={controlsRef} />}
         {/* 手機控制邏輯 */}
-        {isMobile && <MobileControlLogic moveDirRef={moveDirRef} />}
-        {isMobile && started && <MobileLookControl />}
+        {isTouchDevice && <MobileControlLogic moveDirRef={moveDirRef} />}
+        {isTouchDevice && started && <MobileLookControl />}
         <InteractionHandler />
       </Canvas>
       <InteractionUI />

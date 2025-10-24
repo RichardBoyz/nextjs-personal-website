@@ -22,7 +22,7 @@ export default function MobileControlLogic({
     direction.current.set(
       moveDirRef.current?.x || 0,
       0,
-      moveDirRef.current?.z || 0
+      moveDirRef.current?.z || 0,
     );
     direction.current.normalize();
     direction.current.applyEuler(camera.rotation);
@@ -32,10 +32,6 @@ export default function MobileControlLogic({
       const intersects = raycaster.current
         .intersectObjects(scene.children, true)
         .filter((i) => i.object !== camera);
-
-      console.log(
-        intersects.map((i) => ({ name: i.object.name, distance: i.distance }))
-      );
 
       if (intersects.length === 0 || intersects[0].distance > SAFE_DISTANCE) {
         camera.position.add(direction.current.multiplyScalar(SPEED));
