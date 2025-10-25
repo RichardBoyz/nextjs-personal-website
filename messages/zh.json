@@ -40,5 +40,10 @@
     "startExplore": "開始探索",
     "directToMyPage": "直接到我的個人頁",
     "downloadResume": "下載履歷"
+  },
+  "i18n": {
+    "en": "English",
+    "zh": "中文",
+    "jp": "日本語"
   }
 }

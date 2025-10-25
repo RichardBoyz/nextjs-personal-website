@@ -40,5 +40,10 @@
     "startExplore": "Start",
     "directToMyPage": "Go straight to my profile",
     "downloadResume": "Download Resume"
+  },
+  "i18n": {
+    "en": "English",
+    "zh": "中文",
+    "jp": "日本語"
   }
 }

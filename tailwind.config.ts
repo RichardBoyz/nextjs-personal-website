@@ -9,6 +9,8 @@ module.exports = {
         "text-foreground": "var(--text-foreground)",
         "overview-card-bg": "var(--overview-card-background)",
         "overview-card-text": "var(--overview-card-text)",
+        "tooltip-background": "var(--tooltip-background)",
+        "tooltip-text": "var(--tooltip-text)",
       },
       backgroundImage: {
         "profile-bg": "var(--profile-background)",

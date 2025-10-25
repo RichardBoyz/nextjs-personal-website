@@ -11,6 +11,8 @@
   --text-foreground: #171717;
   --overview-card-background: #fff;
   --overview-card-text: #1d1d1f;
+  --tooltip-background: #333333;
+  --tooltip-text: #fff;
 }
 
 .dark {
@@ -20,6 +22,8 @@
   --text-foreground: #fff;
   --overview-card-background: #708090;
   --overview-card-text: #fff;
+  --tooltip-background: #ebebeb;
+  --tooltip-text: #5c5c5c;
 }
 
 body {
