@@ -1,15 +1,15 @@
 // Highlightable.tsx
+import { HighlightContext } from "@/contexts/HighlightContext";
+import { Edges } from "@react-three/drei";
 import {
+  cloneElement,
+  isValidElement,
+  useContext,
   useEffect,
   useRef,
-  useContext,
-  isValidElement,
-  cloneElement,
   useState,
 } from "react";
-import { HighlightContext } from "@/contexts/HighlightContext";
 import * as THREE from "three";
-import { Edges } from "@react-three/drei";
 
 export default function Highlightable({
   children,
@@ -22,7 +22,6 @@ export default function Highlightable({
 
   useEffect(() => {
     if (meshRef.current) {
-      console.log("registering highlightable", meshRef.current.name);
       register(meshRef.current);
       if (meshRef.current instanceof THREE.Mesh) {
         setGeometry(meshRef.current.geometry);
@@ -44,7 +43,7 @@ export default function Highlightable({
             ref: (instance: THREE.Object3D<THREE.Object3DEventMap> | null) => {
               meshRef.current = instance;
             },
-          }
+          },
         )}
       {meshRef.current && geometry && isHighlighted(meshRef.current) && (
         <group

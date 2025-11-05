@@ -83,7 +83,7 @@ export const Overview = () => {
     <div className="flex min-h-screen w-full flex-col">
       <div className="flex flex-col items-center p-4 pt-[5rem]">
         <div className="flex w-full">
-          <div className="relative flex flex-1 flex-col gap-2">
+          <div className="relative flex w-1/2 flex-col gap-2">
             <h1 className="text-xl font-bold md:text-3xl">
               {t("about.title")}
             </h1>
@@ -149,7 +149,7 @@ export const Overview = () => {
                   }}
                 >
                   <a
-                    href="https://drive.google.com/file/d/1VivK20oG26xn_CFOXUjip_l6ljiTDat2/view?usp=sharing"
+                    href="https://drive.google.com/file/d/10TMQlO-eU5Ht3NumHg2XQWDFxfmjAeoQ/view?usp=sharing"
                     target="_blank"
                     download
                     rel="noopener noreferrer"
@@ -192,7 +192,7 @@ export const Overview = () => {
               </motion.div>
             </motion.div>
           </div>
-          <div className="relative flex flex-1 items-center justify-center">
+          <div className="relative flex w-1/2 items-center justify-center">
             <motion.img
               initial={{ rotate: -5, x: 100, opacity: 0 }}
               animate={{

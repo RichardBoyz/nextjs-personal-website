@@ -1,11 +1,11 @@
 "use client";
-import { useContext, useEffect, useState } from "react";
-import { useFrame, useThree } from "@react-three/fiber";
-import * as THREE from "three";
-import useCenterRaycast from "@/hooks/useCenterRaycast";
-import { useStartStore } from "@/stores/useStartStore";
 import { EXCLUDE_HIGHLIGHT_NAMES } from "@/constants/highlight";
 import { HighlightContext } from "@/contexts/HighlightContext";
+import useCenterRaycast from "@/hooks/useCenterRaycast";
+import { useStartStore } from "@/stores/useStartStore";
+import { useThree } from "@react-three/fiber";
+import { useContext, useEffect } from "react";
+import * as THREE from "three";
 
 export default function CenterHighlight() {
   const { camera, gl, scene } = useThree();
@@ -45,12 +45,12 @@ export default function CenterHighlight() {
       const intersects = raycaster.intersectObjects(scene.children, true);
       if (intersects.length > 0) {
         const clicked = intersects[0].object;
-        if (clicked.uuid === current?.uuid) {
-          console.log(
-            "你點擊了聚焦物件（手機）:",
-            clicked.name || clicked.uuid
-          );
-        }
+        // if (clicked.uuid === current?.uuid) {
+        //   console.log(
+        //     "你點擊了聚焦物件（手機）:",
+        //     clicked.name || clicked.uuid
+        //   );
+        // }
       }
     };
 
@@ -60,12 +60,12 @@ export default function CenterHighlight() {
       const intersects = raycaster.intersectObjects(scene.children, true);
       if (intersects.length > 0) {
         const clicked = intersects[0].object;
-        if (clicked.uuid === current?.uuid) {
-          console.log(
-            "你點擊了聚焦物件（桌面）:",
-            clicked.name || clicked.uuid
-          );
-        }
+        // if (clicked.uuid === current?.uuid) {
+        //   console.log(
+        //     "你點擊了聚焦物件（桌面）:",
+        //     clicked.name || clicked.uuid
+        //   );
+        // }
       }
     };
 

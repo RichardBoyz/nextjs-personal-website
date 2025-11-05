@@ -10,7 +10,7 @@ type SectionCardProps = {
 
 export const SectionCard = ({ className, id, children }: SectionCardProps) => {
   return (
-    <div id={id} className={clsx("flex h-dvh", className)}>
+    <div id={id} className={clsx("flex", className)}>
       {children}
     </div>
   );

@@ -4,7 +4,7 @@ import * as THREE from "three";
 
 export default function useInteractiveRaycast(
   targetNames: string[], // 你要指定的物件名稱清單
-  maxDistance: number = 5 // 距離限制
+  maxDistance: number = 5, // 距離限制
 ) {
   const { camera, scene } = useThree();
   const [hitObject, setHitObject] = useState<string | null>(null);
@@ -19,7 +19,6 @@ export default function useInteractiveRaycast(
 
       // 判斷是不是在指定的目標清單
       if (targetNames.includes(firstHit.name)) {
-        console.log("hi");
         const distance = camera.position.distanceTo(firstHit.position);
         if (distance <= maxDistance) {
           // 命中 + 在距離內

@@ -59,8 +59,10 @@ export default function ThreeCanvas() {
         shadows
         style={{ width: "100vw", height: "100vh" }}
       >
+        <hemisphereLight args={["#9900ff", "#444444", 0.7]} />
         <ambientLight intensity={0.5} />
         <directionalLight position={[5, 10, 7.5]} intensity={1} castShadow />
+
         <Suspense fallback={null}>
           <Physics>
             <PersonalScene />
@@ -74,6 +76,7 @@ export default function ThreeCanvas() {
         <InteractionHandler />
       </Canvas>
       <InteractionUI />
+      {isTouchDevice && <div className="fixed right-2 top-2">close</div>}
     </HighlightProvider>
   );
 }

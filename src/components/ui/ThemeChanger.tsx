@@ -3,7 +3,7 @@
 import { MoonIcon, SunIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 
 export function ThemeChanger({
   className,
@@ -21,10 +21,15 @@ export function ThemeChanger({
 
   const isDark = resolvedTheme === "dark";
 
+  const handleClickTheme = (e: MouseEvent) => {
+    e.stopPropagation();
+    setTheme(isDark ? "light" : "dark");
+  };
+
   return (
     <button
       aria-label="Toggle Dark Mode"
-      onClick={() => setTheme(isDark ? "light" : "dark")}
+      onClick={handleClickTheme}
       className={clsx(
         "group absolute z-20 w-fit cursor-pointer p-2 outline-none transition-colors duration-200 hover:bg-gray-500 dark:hover:bg-gray-700",
         className,
